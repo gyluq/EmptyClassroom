@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../elementUI/index.css">
+    <script type="text/javascript" src="../js/highlight.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>第{{this.currentWeek}}周-星期{{this.dayOfWeek}}</h1>
+    <div id="data-table">
+        <el-table border stripe :data="tableData" style="margin:auto">
+            <el-table-column
+                    align="center"
+                    prop="class_12"
+                    label="1-2节课">
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    prop="class_34"
+                    label="3-4节课">
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    prop="class_56"
+                    label="5-6节课">
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    prop="class_78"
+                    label="7-8节课">
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    prop="class_90"
+                    label="9-10节课">
+            </el-table-column>
+        </el-table>
+    </div>
+    <el-button onclick="return searchPrompt('315',true,false)">大教室</el-button>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript" src="../elementUI/index.js"></script>
+<script type="text/javascript" src="../js/axios-0.18.0.js"></script>
+
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            weeks: ["一", "二", "三", "四", "五", "六", "日",],
+            tableData: [],
+            dayOfWeek: "",
+            currentWeek: "",
+        },
+        created() {
+            this.getRoom();
+        },
+        methods: {
+            getRoom() {
+                const data = new Date();
+                data.get
+                axios.get("/room").then(res => {
+                    this.tableData = res.data.formattedRooms;
+                    this.currentWeek = res.data.currentWeek;
+                    this.dayOfWeek = this.weeks[res.data.dayOfWeek - 1];
+                });
+            },
+        }
+    });
+</script>
+</body>
+</html>
