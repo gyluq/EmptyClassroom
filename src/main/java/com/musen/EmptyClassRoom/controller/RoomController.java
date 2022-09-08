@@ -1,7 +1,7 @@
 package com.musen.EmptyClassRoom.controller;
 
-import com.musen.EmptyClassRoom.JdbcOperation;
 import com.musen.EmptyClassRoom.pojo.FormattedRoom;
+import com.musen.EmptyClassRoom.service.ClassRoomService;
 import com.musen.EmptyClassRoom.utils.ResultUtils;
 import com.musen.EmptyClassRoom.utils.WeekUtils;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,13 @@ import java.util.regex.Pattern;
 
 @Controller
 public class RoomController {
+
+    private final ClassRoomService classRoomService;
+
+    public RoomController(ClassRoomService classRoomService) {
+        this.classRoomService = classRoomService;
+    }
+
     @ResponseBody
     @GetMapping("/room")
     public ResultUtils room() {
@@ -27,8 +34,7 @@ public class RoomController {
         arrayList.add(new FormattedRoom());
 
         //获取总数据
-        JdbcOperation jdbcOperation = new JdbcOperation();
-        HashMap<String, String> stringListHashMap = jdbcOperation.selectEmptyClassroom();
+        HashMap<String, String> stringListHashMap = classRoomService.getAllEmptyClassrooms();
 
         //调整数据结构,便于elementUI解析
         for (Map.Entry<String, String> entry : stringListHashMap.entrySet()) {

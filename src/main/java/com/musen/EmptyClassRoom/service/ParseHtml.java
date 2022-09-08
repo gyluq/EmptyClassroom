@@ -1,4 +1,4 @@
-package com.musen.EmptyClassRoom.parse;
+package com.musen.EmptyClassRoom.service;
 
 
 import org.jsoup.Jsoup;
